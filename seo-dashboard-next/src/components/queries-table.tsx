@@ -10,20 +10,30 @@ interface QueriesTableProps {
   data: any
 }
 
+interface Query {
+  query: string
+  clicks: number
+  impressions: number
+  ctr: number
+  position: number
+}
+
+type SortDirection = 'asc' | 'desc'
+
 export function QueriesTable({ data }: QueriesTableProps) {
   const [searchTerm, setSearchTerm] = useState('')
-  const [sortConfig, setSortConfig] = useState({ key: 'clicks', direction: 'desc' as const })
+  const [sortConfig, setSortConfig] = useState<{ key: string; direction: SortDirection }>({ key: 'clicks', direction: 'desc' })
 
   const queries = data?.top_queries || []
 
   const filteredAndSortedQueries = useMemo(() => {
-    let filtered = queries.filter(query =>
+    let filtered = queries.filter((query: Query) =>
       query.query.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
-    filtered.sort((a, b) => {
-      const aValue = a[sortConfig.key] || 0
-      const bValue = b[sortConfig.key] || 0
+    filtered.sort((a: Query, b: Query) => {
+      const aValue = a[sortConfig.key as keyof Query] || 0
+      const bValue = b[sortConfig.key as keyof Query] || 0
       
       if (aValue < bValue) {
         return sortConfig.direction === 'asc' ? -1 : 1
@@ -40,7 +50,7 @@ export function QueriesTable({ data }: QueriesTableProps) {
   const handleSort = (key: string) => {
     setSortConfig(prev => ({
       key,
-      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc'
+      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc' as SortDirection
     }))
   }
 
@@ -144,7 +154,7 @@ export function QueriesTable({ data }: QueriesTableProps) {
               </tr>
             </thead>
             <tbody>
-              {filteredAndSortedQueries.map((query, index) => (
+              {filteredAndSortedQueries.map((query: Query, index: number) => (
                 <tr key={index} className="border-b hover:bg-gray-50 dark:hover:bg-gray-800">
                   <td className="p-2 font-medium">{query.query}</td>
                   <td className="text-right p-2">{formatNumber(query.clicks || 0)}</td>

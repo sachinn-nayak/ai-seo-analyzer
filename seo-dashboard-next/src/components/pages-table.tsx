@@ -10,20 +10,30 @@ interface PagesTableProps {
   data: any
 }
 
+interface Page {
+  page: string
+  clicks: number
+  impressions: number
+  ctr: number
+  position: number
+}
+
+type SortDirection = 'asc' | 'desc'
+
 export function PagesTable({ data }: PagesTableProps) {
   const [searchTerm, setSearchTerm] = useState('')
-  const [sortConfig, setSortConfig] = useState({ key: 'clicks', direction: 'desc' as const })
+  const [sortConfig, setSortConfig] = useState<{ key: string; direction: SortDirection }>({ key: 'clicks', direction: 'desc' })
 
   const pages = data?.top_pages || []
 
   const filteredAndSortedPages = useMemo(() => {
-    let filtered = pages.filter(page =>
+    let filtered = pages.filter((page: Page) =>
       page.page.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
-    filtered.sort((a, b) => {
-      const aValue = a[sortConfig.key] || 0
-      const bValue = b[sortConfig.key] || 0
+    filtered.sort((a: Page, b: Page) => {
+      const aValue = a[sortConfig.key as keyof Page] || 0
+      const bValue = b[sortConfig.key as keyof Page] || 0
       
       if (aValue < bValue) {
         return sortConfig.direction === 'asc' ? -1 : 1
@@ -40,7 +50,7 @@ export function PagesTable({ data }: PagesTableProps) {
   const handleSort = (key: string) => {
     setSortConfig(prev => ({
       key,
-      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc'
+      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc' as SortDirection
     }))
   }
 
@@ -137,7 +147,7 @@ export function PagesTable({ data }: PagesTableProps) {
               </tr>
             </thead>
             <tbody>
-              {filteredAndSortedPages.map((page, index) => (
+              {filteredAndSortedPages.map((page: Page, index: number) => (
                 <tr key={index} className="border-b hover:bg-gray-50 dark:hover:bg-gray-800">
                   <td className="p-2">
                     <div className="flex items-center space-x-2 max-w-xs truncate">

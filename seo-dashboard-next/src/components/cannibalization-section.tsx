@@ -8,6 +8,20 @@ interface CannibalizationSectionProps {
   data: any
 }
 
+interface CannibalizationIssue {
+  query: string
+  total_impressions: number
+  competing_pages?: Array<{
+    page: string
+    clicks: number
+    impressions: number
+    position: number
+  }>
+  recommended_action: string
+  winner_page: string
+  winner_reason: string
+}
+
 export function CannibalizationSection({ data }: CannibalizationSectionProps) {
   const cannibalization = data?.cannibalization || []
 
@@ -40,7 +54,7 @@ export function CannibalizationSection({ data }: CannibalizationSectionProps) {
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          {cannibalization.map((issue, index) => (
+          {cannibalization.map((issue: CannibalizationIssue, index: number) => (
             <div key={index} className="border border-orange-200 rounded-lg p-4 bg-orange-50 dark:bg-orange-950">
               <div className="mb-4">
                 <h4 className="font-semibold text-lg text-orange-800 dark:text-orange-200 mb-2">

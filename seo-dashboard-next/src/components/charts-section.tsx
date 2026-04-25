@@ -7,6 +7,16 @@ interface ChartsSectionProps {
   data: any
 }
 
+interface CountryEntry {
+  country: string
+  clicks: number
+}
+
+interface DeviceEntry {
+  device: string
+  clicks: number
+}
+
 export function ChartsSection({ data }: ChartsSectionProps) {
   const topQueries = data?.top_queries?.slice(0, 10) || []
   const countrySplit = data?.country_split?.slice(0, 8) || []
@@ -75,12 +85,12 @@ export function ChartsSection({ data }: ChartsSectionProps) {
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                label={({ country, clicks }) => `${country.toUpperCase()}: ${clicks}`}
+                label={({ country, clicks }: CountryEntry) => `${country.toUpperCase()}: ${clicks}`}
                 outerRadius={80}
                 fill="#8884d8"
                 dataKey="clicks"
               >
-                {countrySplit.map((entry, index) => (
+                {countrySplit.map((entry: CountryEntry, index: number) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
@@ -103,12 +113,12 @@ export function ChartsSection({ data }: ChartsSectionProps) {
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                label={({ device, clicks }) => `${device}: ${clicks}`}
+                label={({ device, clicks }: DeviceEntry) => `${device}: ${clicks}`}
                 outerRadius={80}
                 fill="#8884d8"
                 dataKey="clicks"
               >
-                {deviceSplit.map((entry, index) => (
+                {deviceSplit.map((entry: DeviceEntry, index: number) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>

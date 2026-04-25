@@ -9,6 +9,14 @@ interface InsightsPanelProps {
   data: any
 }
 
+interface Query {
+  query: string
+  ctr: number
+  impressions: number
+  position: number
+  clicks?: number
+}
+
 export function InsightsPanel({ data }: InsightsPanelProps) {
   const [isGeneratingAI, setIsGeneratingAI] = useState(false)
   
@@ -28,7 +36,7 @@ export function InsightsPanel({ data }: InsightsPanelProps) {
     const cannibalization = data?.cannibalization || []
 
     // Low CTR insights
-    const lowCtrQueries = topQueries.filter(q => q.ctr < 2 && q.impressions > 100)
+    const lowCtrQueries = topQueries.filter((q: Query) => q.ctr < 2 && q.impressions > 100)
     if (lowCtrQueries.length > 0) {
       insights.push({
         type: 'warning',
@@ -41,7 +49,7 @@ export function InsightsPanel({ data }: InsightsPanelProps) {
     }
 
     // High position insights
-    const highPositionQueries = topQueries.filter(q => q.position > 30)
+    const highPositionQueries = topQueries.filter((q: Query) => q.position > 30)
     if (highPositionQueries.length > 0) {
       insights.push({
         type: 'error',
@@ -54,7 +62,7 @@ export function InsightsPanel({ data }: InsightsPanelProps) {
     }
 
     // Good performance insights
-    const topPerformers = topQueries.filter(q => q.position <= 10 && q.ctr >= 5)
+    const topPerformers = topQueries.filter((q: Query) => q.position <= 10 && q.ctr >= 5)
     if (topPerformers.length > 0) {
       insights.push({
         type: 'success',
@@ -198,7 +206,7 @@ export function InsightsPanel({ data }: InsightsPanelProps) {
                     <div className="mb-4">
                       <h4 className="font-medium text-sm mb-2">Affected Queries:</h4>
                       <div className="space-y-2">
-                        {insight.queries.map((query, queryIndex) => (
+                        {insight.queries.map((query: Query, queryIndex: number) => (
                           <div key={queryIndex} className="flex items-center justify-between text-xs bg-white dark:bg-gray-800 rounded p-2">
                             <span className="font-medium truncate flex-1">{query.query || query.query}</span>
                             <div className="flex items-center space-x-2 text-gray-500">
