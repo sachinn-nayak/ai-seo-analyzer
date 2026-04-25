@@ -1,0 +1,106 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+*.so
+
+# Credentials — never commit these
+credentials.json
+token.json
+service-account*.json
+*-credentials.json
+.env
+.env.local
+
+# Node.js / Next.js
+node_modules/
+.next/
+out/
+.npm/
+.yarn/
+.pnp/
+.pnp.js
+
+# GSC output files and temp files
+/tmp/
+*.tmp
+*.log
+clean_test.json
+test_output.json
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# Test artifacts
+.pytest_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Security reports and local tool state (never commit)
+.gstack/
+
+# Skill eval workspaces — local scratch data, not for repo
+*-workspace/
+
+# Git worktrees and Claude worktrees
+.git/worktrees/
+.claude/worktrees/
+
+# Claude plugin (local only)
+.claude-plugin/
+
+# MCP config (local only)
+.mcp.json
+
+# Binary files
+*.exe
+*.dll
+*.so
+*.dylib
+gcloud-installer.exe
+
+# Old HTML files (superseded by Next.js)
+seo_dashboard.html
+
+# Test scripts (development only)
+test_seo_analysis_direct.py
+test_seo_skill.py
+debug_json_parsing.py
+
+# Batch files (development only)
+run_seo_analysis.bat
+run_seo_analysis_fixed.bat
+
+# Build artifacts
+dist/
+build/
+*.egg
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache directories
+.cache/
+.parcel-cache/
+.vercel/
+
+# Environment files
+.env.production
+.env.development
+.env.test
