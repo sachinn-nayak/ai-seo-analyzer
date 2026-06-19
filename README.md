@@ -40,13 +40,16 @@ cd ai-seo-analyzer
 
 2. **Install Python dependencies:**
 ```bash
+cd backend
 pip install -r requirements.txt
+cd ..
 ```
 
 3. **Install Node.js dependencies (for dashboard):**
 ```bash
-cd seo-dashboard-next
+cd frontend/seo-dashboard-next
 npm install
+cd ../..
 ```
 
 4. **Set up environment variables:**
@@ -69,7 +72,7 @@ gcloud auth application-default login \
 
 6. **Start the FastAPI server:**
 ```bash
-cd seo/seo-analysis/scripts
+cd backend/scripts
 python api_server.py
 ```
 
@@ -77,7 +80,7 @@ The server will start on `http://127.0.0.1:8000`
 
 7. **Start the Next.js dashboard (in a new terminal):**
 ```bash
-cd seo-dashboard-next
+cd frontend/seo-dashboard-next
 npm run dev
 ```
 
@@ -95,18 +98,19 @@ The dashboard will be available at `http://localhost:3000`
 
 ```
 ai-seo-analyzer/
-├── seo-dashboard-next/          # Next.js dashboard frontend
-│   ├── src/
-│   │   ├── app/                # Next.js app router
-│   │   ├── components/         # React components
-│   │   └── lib/                # Utility functions
-│   ├── package.json
-│   └── tailwind.config.js
-├── seo/
-│   └── seo-analysis/
-│       └── scripts/
-│           ├── analyze_gsc.py  # GSC data extraction
-│           └── api_server.py   # FastAPI backend
+├── frontend/                    # Next.js dashboard frontend
+│   ├── seo-dashboard-next/      # Next.js app
+│   │   ├── src/
+│   │   │   ├── app/            # Next.js app router
+│   │   │   ├── components/     # React components
+│   │   │   └── lib/            # Utility functions
+│   │   ├── package.json
+│   │   └── tailwind.config.js
+├── backend/                     # Python backend
+│   ├── scripts/                # GSC analysis scripts
+│   │   ├── analyze_gsc.py      # GSC data extraction
+│   │   └── api_server.py       # FastAPI backend
+│   └── requirements.txt        # Python dependencies
 ├── .env.example                # Environment variables template
 ├── .gitignore                  # Files to exclude from git
 └── README.md                   # This file

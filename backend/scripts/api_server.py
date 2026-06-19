@@ -7,11 +7,10 @@ import os
 import anthropic
 from dotenv import load_dotenv
 
-# Load environment variables from .env file in the toprank directory
+# Load environment variables from .env file in the project root
 current_dir = os.path.dirname(os.path.abspath(__file__))
-seo_analysis_dir = os.path.dirname(current_dir)
-seo_dir = os.path.dirname(seo_analysis_dir)
-project_root = os.path.dirname(seo_dir)
+backend_dir = os.path.dirname(current_dir)
+project_root = os.path.dirname(backend_dir)
 env_path = os.path.join(project_root, '.env')
 load_dotenv(env_path)
 
